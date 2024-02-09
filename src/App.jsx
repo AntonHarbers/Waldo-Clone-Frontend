@@ -14,9 +14,6 @@ function App() {
           <li>
             <Link to="/leaderboards">Leaderboards</Link>
           </li>
-          <li>
-            <Link to="/game">Game</Link>
-          </li>
         </ul>
       </nav>
       <Routes>

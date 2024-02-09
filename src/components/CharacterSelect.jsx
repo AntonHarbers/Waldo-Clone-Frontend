@@ -14,7 +14,7 @@ export default function CharacterSelect({
             className=" w-28 h-[30px] bg-slate-200 flex items-center justify-around cursor-pointer"
           >
             <img
-              src={character.img}
+              src={character.imgUrl}
               alt={`${character.name} Pic`}
               className="w-[24px] h-[24px]"
             />

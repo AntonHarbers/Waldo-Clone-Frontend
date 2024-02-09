@@ -1,17 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import FirstImage from '/gameOne/game.webp';
-import firstChar from '/gameOne/1.png';
-import secondChar from '/gameOne/2.png';
-import thirdChar from '/gameOne/3.png';
-import fourthChar from '/gameOne/4.png';
-
 import CharacterSelect from '../components/CharacterSelect';
+import { characterInfo } from '../models/data';
+import { useNavigate } from 'react-router-dom';
 
-export default function GamePage(gameInfo) {
-  const [gameImage] = useState(
-    gameInfo.name == 'First' ? FirstImage : FirstImage
-  );
+// eslint-disable-next-line react/prop-types
+export default function GamePage() {
+  const navigate = useNavigate();
+  const [gameImage] = useState(FirstImage);
+  const [timer, setTimer] = useState(0);
 
+  const [charData, setCharData] = useState(characterInfo);
   const [isSelecting, setIsSelecting] = useState(false);
   const [selectedCoords, setSelectedCoords] = useState([0, 0]);
   const [selectedScreenCoords, setSelectedScreenCoords] = useState([0, 0]);
@@ -26,27 +25,67 @@ export default function GamePage(gameInfo) {
 
     setSelectedScreenCoords([event.clientX - 25, event.clientY - 25]);
     setIsSelecting(true);
-    setSelectedCoords([x, y]);
+    setSelectedCoords([parseInt(x), parseInt(y)]);
   };
 
   const HandleCharacterSelection = async (id) => {
     console.log(id);
     console.log(selectedCoords);
+    let correct = false;
+
+    // MOCK API CALL
+    characterInfo.forEach((entry) => {
+      if (entry._id == id) {
+        if (
+          entry.x <= selectedCoords[0] + 2 &&
+          entry.x >= selectedCoords[0] - 2 &&
+          entry.y >= selectedCoords[1] - 2 &&
+          entry.y <= selectedCoords[1] + 2
+        ) {
+          correct = true;
+        }
+      }
+    });
+
     // make api call, check the following on serverside:
     // find character with id, check if coords are within range
     // if they are place a pin on coords, and check if game is over on server
     // if game is over then go to leaderboards and display form for submission of gamescore
     // if they are not then do nothing
 
-    let isCorrect = true;
-
-    if (isCorrect) {
+    if (correct) {
       setMarkers((prevMarkers) => [...prevMarkers, selectedScreenCoords]);
+      setCharData((prevCharData) =>
+        prevCharData.filter((prevChar) => prevChar._id !== id)
+      );
+      console.log(charData);
+    } else {
+      console.log('nope');
     }
+
+    if (charData.length == 1) {
+      navigate('/leaderboards');
+      console.log(timer);
+      // send game end api post request
+    }
+
     setSelectedScreenCoords([0, 0]);
     setIsSelecting(false);
     setSelectedCoords([0, 0]);
   };
+
+  const HandleStartGame = async () => {
+    // make a post api call to post a new game
+    // data is _id, playerName (default blank), startTime (default now), endTime (when game ends), score virtual
+    setTimer(0);
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => setTimer(timer + 0.01), 10);
+
+    return () => clearInterval(interval);
+  }, [timer]);
+
   return (
     <div
       onClick={() => {
@@ -54,6 +93,7 @@ export default function GamePage(gameInfo) {
       }}
       className=" select-none flex bg-slate-500 w-full h-[100vh] items-center justify-center text-center"
     >
+      <h1 className=" absolute top-5 ml-auto mr-auto">{timer.toFixed(2)}</h1>
       {markers.map((marker) => (
         <div
           key={marker[0] + marker[1]}
@@ -70,6 +110,7 @@ export default function GamePage(gameInfo) {
         src={gameImage}
         alt="Game Image"
         onClick={HandleImageClick}
+        onLoad={HandleStartGame}
       />
       {isSelecting && (
         <div
@@ -80,12 +121,8 @@ export default function GamePage(gameInfo) {
           }}
         >
           <CharacterSelect
-            characterInfo={[
-              { _id: '1', name: 'Waldo', game: '1', img: firstChar },
-              { _id: '2', name: 'Jason', game: '1', img: secondChar },
-              { _id: '3', name: 'Robot', game: '1', img: thirdChar },
-              { _id: '4', name: 'Wilda', game: '1', img: fourthChar },
-            ]}
+            characterInfo={charData}
+            setCharacterInfo={setCharData}
             HandleCharacterSelection={HandleCharacterSelection}
           />
         </div>
