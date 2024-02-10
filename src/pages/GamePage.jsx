@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import FirstImage from '/gameOne/game.webp';
 import CharacterSelect from '../components/CharacterSelect';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -8,10 +8,12 @@ import { useNavigate, useLocation } from 'react-router-dom';
 export default function GamePage() {
   const level = useLocation().pathname.slice(5)[1];
   const navigate = useNavigate();
+  const fetchDone = useRef(false);
 
   const [gameImage] = useState(
     level == 1 ? FirstImage : level == 2 ? FirstImage : null
   );
+  const [gameId, setGameId] = useState(null);
   const [timer, setTimer] = useState(0);
   const [charData, setCharData] = useState();
   const [isSelecting, setIsSelecting] = useState(false);
@@ -55,8 +57,19 @@ export default function GamePage() {
     }
 
     if (charData.length == 1) {
-      navigate('/leaderboards');
-      // send request to finish game
+      const response = await fetch(
+        `${import.meta.env.VITE_API}/games/${gameId}`,
+        {
+          method: 'PATCH',
+          mode: 'cors',
+        }
+      );
+
+      if (response.ok) {
+        navigate('/leaderboards');
+      } else {
+        console.log('There was an issue with the server');
+      }
     }
 
     setSelectedScreenCoords([0, 0]);
@@ -65,9 +78,24 @@ export default function GamePage() {
   };
 
   const HandleStartGame = async () => {
-    // make a post api call to post a new game
-    // data is _id, playerName (default blank), startTime (default now), endTime (when game ends), score virtual
     setTimer(0);
+
+    const response = await fetch(`${import.meta.env.VITE_API}/games`, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        level: level,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!data) return console.log('Issue posting new game');
+
+    setGameId(data);
   };
 
   useEffect(() => {
@@ -76,12 +104,14 @@ export default function GamePage() {
   }, [timer]);
 
   useEffect(() => {
+    if (fetchDone.current) return;
     const fetchData = async (route) => {
       const response = await fetch(`${import.meta.env.VITE_API}/${route}`);
       const data = await response.json();
       setCharData(data.filter((char) => char.level == level));
     };
     fetchData('characters');
+    fetchDone.current = true;
   }, [level]);
 
   return (
