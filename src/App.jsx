@@ -1,7 +1,8 @@
 import { BrowserRouter as Router, Routes, Link, Route } from 'react-router-dom';
 import GamePage from './pages/GamePage';
-import LeaderBoardPage from './pages/LeaderboardPage';
 import MenuPage from './pages/MenuPage';
+import LeaderboardMenu from './pages/LeaderboardMenu';
+import LeaderboardPage from './pages/LeaderboardPage';
 
 function App() {
   return (
@@ -17,9 +18,17 @@ function App() {
         </ul>
       </nav>
       <Routes>
-        <Route path="/game" element={<GamePage />} />
-        <Route path="/leaderboards" element={<LeaderBoardPage />} />
+        {/* Menu Routes */}
+        <Route path="/leaderboards" element={<LeaderboardMenu />} />
         <Route path="/" element={<MenuPage />} />
+        {/* Level Routes */}
+        <Route path="/level1" element={<GamePage />} />
+        <Route path="/level2" element={<GamePage />} />
+        <Route path="/level2" element={<GamePage />} />
+        {/* Leaderboard routes */}
+        <Route path="/level1leaderboard" element={<LeaderboardPage />} />
+        <Route path="/level2leaderboard" element={<LeaderboardPage />} />
+        <Route path="/level3leaderboard" element={<LeaderboardPage />} />
       </Routes>
     </Router>
   );

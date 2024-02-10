@@ -7,3 +7,11 @@ A wheres waldo online game with leaderboards and different pictures to play thro
 [API Repo]()
 
 [API Endpoint]()
+
+// To-Dos
+
+// routes for get, post, put and delete games
+// send back correct games data
+// update timefinished in games data
+// update username in games data
+// delete unfinished games data
