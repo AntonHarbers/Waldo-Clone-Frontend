@@ -58,7 +58,7 @@ export default function GamePage() {
 
     if (charData.length == 1) {
       const response = await fetch(
-        `${import.meta.env.VITE_API}/games/${gameId}`,
+        `${import.meta.env.VITE_API}/games/${gameId}/time`,
         {
           method: 'PATCH',
           mode: 'cors',
@@ -66,6 +66,8 @@ export default function GamePage() {
       );
 
       if (response.ok) {
+        const data = await response.json();
+        console.log(data.score / 1000);
         navigate('/leaderboards');
       } else {
         console.log('There was an issue with the server');
@@ -92,16 +94,21 @@ export default function GamePage() {
     });
 
     const data = await response.json();
-
     if (!data) return console.log('Issue posting new game');
 
     setGameId(data);
   };
 
   useEffect(() => {
-    const interval = setInterval(() => setTimer(timer + 0.01), 10);
+    const startTime = Date.now(); // Capture start time in milliseconds
+    const interval = setInterval(() => {
+      // Calculate elapsed time in seconds
+      const secondsElapsed = Math.floor((Date.now() - startTime) / 1000);
+      setTimer(secondsElapsed);
+    }, 1000); // Update every second
+
     return () => clearInterval(interval);
-  }, [timer]);
+  }, []);
 
   useEffect(() => {
     if (fetchDone.current) return;
