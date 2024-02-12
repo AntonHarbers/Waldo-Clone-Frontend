@@ -10,8 +10,9 @@ A wheres waldo online game with leaderboards and different pictures to play thro
 
 // To-Dos
 
-// routes for get, post, put and delete games
-// send back correct games data
-// update timefinished in games data
-// update username in games data
-// delete unfinished games data
+[x] Deal with late or no responses on front end
+[] Front end styling
+[] Add 3 levels with characters to db and app
+[] Test if all works
+[] Publish and update cors/env
+[] Update docs
