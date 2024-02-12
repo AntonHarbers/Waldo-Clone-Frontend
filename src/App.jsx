@@ -3,17 +3,37 @@ import GamePage from './pages/GamePage';
 import MenuPage from './pages/MenuPage';
 import LeaderboardMenu from './pages/LeaderboardMenu';
 import LeaderboardPage from './pages/LeaderboardPage';
+import { useState } from 'react';
 
 function App() {
+  const [currentRoute, setCurrentRoute] = useState('home');
+
   return (
     <Router>
-      <nav className="w-[100vw]">
-        <ul className="flex w-[100vw] absolute justify-between p-10">
-          <li>
-            <Link to="/">Home</Link>
+      <nav>
+        <ul className="flex w-full absolute justify-between p-10">
+          <li
+            className={`select-none  text-2xl font-bold active:scale-90 hover:scale-125 transition-all duration-75 ease-in-out ${
+              currentRoute == 'home' ? 'text-slate-100' : 'text-slate-400'
+            }`}
+          >
+            <Link onClick={() => setCurrentRoute('home')} to="/">
+              Home
+            </Link>
           </li>
-          <li>
-            <Link to="/leaderboards">Leaderboards</Link>
+          <li
+            className={`select-none text-slate-200 text-2xl font-bold active:scale-90 hover:scale-125 transition-all duration-75 ease-in-out ${
+              currentRoute == 'leaderboards'
+                ? 'text-slate-100'
+                : 'text-slate-400'
+            }`}
+          >
+            <Link
+              onClick={() => setCurrentRoute('leaderboards')}
+              to="/leaderboards"
+            >
+              Leaderboards
+            </Link>
           </li>
         </ul>
       </nav>

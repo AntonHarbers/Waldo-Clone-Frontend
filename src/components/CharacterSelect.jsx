@@ -19,7 +19,7 @@ export default function CharacterSelect({
         top: `calc(${selectedCoords[1]}% - 2%)`,
       }}
     >
-      <div className="relative h-[50px] w-[50px] border-4 border-red-500">
+      <div className=" select-none relative h-[50px] w-[50px] border-4 border-red-500">
         <div className=" absolute flex flex-col w-auto h-[128px] gap-y-[2px] justify-center left-[48px] top-[-42px]">
           {characterInfo.map((character) => (
             <div

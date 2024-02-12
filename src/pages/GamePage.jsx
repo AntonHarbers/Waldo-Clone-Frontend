@@ -7,6 +7,7 @@ import NameForm from '../components/NameForm';
 import Timer from '../components/Timer';
 import Loading from '../components/Loading';
 import Markers from '../components/Markers';
+import Characters from '../components/Characters';
 
 export default function GamePage() {
   const level = useLocation().pathname.slice(5)[1];
@@ -122,9 +123,10 @@ export default function GamePage() {
       className="select-none flex bg-slate-500 w-full h-[100vh] items-center justify-center text-center"
     >
       <Timer />
-      <div className="relative h-[60vh] md:h-[80vh] w-auto max-w-[90vw] border-white border-4 rounded-sm">
+      <Characters charData={charData} />
+      <div className="relative w-[45vw] h-auto">
         <img
-          className="w-full h-full"
+          className="w-[45vw] h-auto"
           src={gameImage}
           alt="Game Image"
           onClick={HandleImageClick}

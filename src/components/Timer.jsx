@@ -14,5 +14,17 @@ export default function Timer() {
     return () => clearInterval(interval);
   }, []);
 
-  return <h1 className="absolute top-5 ml-auto mr-auto">{timer.toFixed(2)}</h1>;
+  return (
+    <h1
+      className={`select-none absolute bottom-2 right-2 text-lg ${
+        timer < 5
+          ? 'bg-green-400'
+          : timer < 10
+          ? ' bg-yellow-300'
+          : 'bg-slate-200'
+      } p-2 rounded-md`}
+    >
+      Time: {timer.toFixed(2)}s
+    </h1>
+  );
 }
