@@ -1,5 +1,11 @@
-/* eslint-disable react/prop-types */
-// eslint-disable-next-line react/prop-types
+import PropTypes from 'prop-types';
+
+CharacterSelect.propTypes = {
+  characterInfo: PropTypes.array,
+  HandleCharacterSelection: PropTypes.func,
+  selectedCoords: PropTypes.array,
+};
+
 export default function CharacterSelect({
   characterInfo,
   HandleCharacterSelection,

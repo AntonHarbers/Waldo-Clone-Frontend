@@ -1,3 +1,9 @@
+import PropTypes from 'prop-types';
+
+Markers.propTypes = {
+  markers: PropTypes.array,
+};
+
 export default function Markers({ markers }) {
   return markers.map((marker) => (
     <div

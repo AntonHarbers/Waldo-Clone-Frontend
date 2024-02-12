@@ -1,6 +1,12 @@
-/* eslint-disable react/prop-types */
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+NameForm.propTypes = {
+  level: PropTypes.string,
+  gameId: PropTypes.string,
+  score: PropTypes.number,
+};
 
 export default function NameForm({ level, gameId, score }) {
   const navigate = useNavigate();
