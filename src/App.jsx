@@ -44,7 +44,7 @@ function App() {
         {/* Level Routes */}
         <Route path="/level1" element={<GamePage />} />
         <Route path="/level2" element={<GamePage />} />
-        <Route path="/level2" element={<GamePage />} />
+        <Route path="/level3" element={<GamePage />} />
         {/* Leaderboard routes */}
         <Route path="/level1leaderboard" element={<LeaderboardPage />} />
         <Route path="/level2leaderboard" element={<LeaderboardPage />} />

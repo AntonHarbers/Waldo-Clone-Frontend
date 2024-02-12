@@ -11,7 +11,7 @@ export default function Characters({ charData }) {
       <div className="flex gap-2 p-2">
         {' '}
         {charData.map((char) => (
-          <div key={char._id}>
+          <div key={char._id} className="flex flex-col items-center">
             <img className="w-10 h-10" src={char.imgUrl} alt="charImage" />
             <h1>{char.name}</h1>
           </div>

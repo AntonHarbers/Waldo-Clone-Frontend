@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
-import FirstImage from '/gameOne/game.webp';
+import FirstImage from '/gameOne/space.webp';
+import SecondImage from '/gameTwo/prison.webp';
+import ThirdImage from '/gameThree/bball.webp';
 
 export default function LeaderboardMenu() {
   return (
@@ -22,8 +24,8 @@ export default function LeaderboardMenu() {
         <div className="flex flex-col gap-3 border border-slate-500 p-2 md:p-10 rounded-xl hover:border-slate-400 transition-all duration-100">
           <img
             className="w-28 md:w-52 h-auto rounded-sm"
-            src={FirstImage}
-            alt="First Image"
+            src={SecondImage}
+            alt="Second Image"
           />
           <Link
             className="p-4 bg-slate-400 rounded-md hover:bg-green-300 transition-all duration-100 active:scale-90"
@@ -35,8 +37,8 @@ export default function LeaderboardMenu() {
         <div className="flex flex-col gap-3 border border-slate-500 p-2 md:p-10 rounded-xl hover:border-slate-400 transition-all duration-100">
           <img
             className="w-28 md:w-52 h-auto rounded-sm"
-            src={FirstImage}
-            alt="First Image"
+            src={ThirdImage}
+            alt="Third Image"
           />
           <Link
             className="p-4 bg-slate-400 rounded-md hover:bg-green-300 transition-all duration-100 active:scale-90"

@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useRef, useState } from 'react';
-import FirstImage from '/gameOne/game.webp';
+import FirstImage from '/gameOne/space.webp';
+import SecondImage from '/gameTwo/prison.webp';
+import ThirdImage from '/gameThree/bball.webp';
 import CharacterSelect from '../components/CharacterSelect';
 import { useLocation } from 'react-router-dom';
 import NameForm from '../components/NameForm';
@@ -12,7 +14,13 @@ import Characters from '../components/Characters';
 export default function GamePage() {
   const level = useLocation().pathname.slice(5)[1];
   const [gameImage] = useState(
-    level == 1 ? FirstImage : level == 2 ? FirstImage : null
+    level == 1
+      ? FirstImage
+      : level == 2
+      ? SecondImage
+      : level == 3
+      ? ThirdImage
+      : null
   );
   const fetchDone = useRef(false);
   const fetchingCharCoords = useRef(false);
@@ -32,6 +40,7 @@ export default function GamePage() {
     const y = ((event.clientY - rect.top) / target.offsetHeight) * 100;
     setIsSelecting(true);
     setSelectedCoords([parseInt(x), parseInt(y)]);
+    console.log(selectedCoords);
   };
 
   const HandleCharacterSelection = async (id) => {
@@ -51,14 +60,15 @@ export default function GamePage() {
       }
     );
 
-    const data = await response.json(); // data returned will be a single bool {true/false}
+    const data = await response
+      .json()
+      .then((fetchingCharCoords.current = false)); // data returned will be a single bool {true/false}
 
     if (data) {
       setMarkers((prevMarkers) => [...prevMarkers, selectedCoords]);
       setCharData((prevCharData) =>
         prevCharData.filter((prevChar) => prevChar._id !== id)
       );
-      fetchingCharCoords.current = false;
     }
 
     if (charData.length == 1) {

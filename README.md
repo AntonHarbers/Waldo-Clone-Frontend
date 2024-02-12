@@ -7,12 +7,3 @@ A wheres waldo online game with leaderboards and different pictures to play thro
 [API Repo]()
 
 [API Endpoint]()
-
-// To-Dos
-
-[x] Deal with late or no responses on front end
-[] Front end styling
-[] Add 3 levels with characters to db and app
-[] Test if all works
-[] Publish and update cors/env
-[] Update docs
